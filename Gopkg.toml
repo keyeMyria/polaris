@@ -60,3 +60,7 @@
 [[constraint]]
   revision = "v1.3.1"
   name = "github.com/golang/protobuf"
+
+[[constraint]]
+  name = "github.com/ghodss/yaml"
+  version = "1.0.0"
