@@ -24,7 +24,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ghodss/yaml"
 	"github.com/gorilla/mux"
 	conf "github.com/reactiveops/polaris/pkg/config"
 	"github.com/reactiveops/polaris/pkg/dashboard"
@@ -40,6 +39,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 	"sigs.k8s.io/controller-runtime/pkg/runtime/signals"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
+	"sigs.k8s.io/yaml"
 )
 
 const (
@@ -232,7 +232,10 @@ func runAudit(c conf.Configuration, auditPath string, outputFile string, outputU
 	if outputFormat == "score" {
 		outputBytes = []byte(fmt.Sprint(auditData.ClusterSummary.Score))
 	} else if outputFormat == "yaml" {
-		outputBytes, err = yaml.Marshal(auditData)
+		jsonBytes, err := json.Marshal(auditData)
+		if err == nil {
+			outputBytes, err = yaml.JSONToYAML(jsonBytes)
+		}
 	} else {
 		outputBytes, err = json.MarshalIndent(auditData, "", "  ")
 	}
