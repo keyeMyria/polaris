@@ -69,7 +69,7 @@ kubectl port-forward --namespace polaris svc/polaris-dashboard 8080:80
 #### Webhook
 ```
 git clone https://github.com/reactiveops/polaris && cd polaris
-helm upgrade --install polaris deploy/helm/polaris/ --namespace polaris --set webhook.enable=true
+helm upgrade --install polaris deploy/helm/polaris/ --namespace polaris --set webhook.enable=true --set dashboard.enable=false
 ```
 
 ### Local Binary
